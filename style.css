@@ -1,0 +1,1084 @@
+/* ==========================================================================
+   CASIO fx-991EX CLASSWIZ — 1:1 REALISTIC HARDWARE & LCD SIMULATOR STYLES
+   ========================================================================== */
+
+:root {
+  --calc-scale: 1;
+  --lcd-bg: #c6d1be;
+  --lcd-bg-dark: #b6c3ad;
+  --lcd-ink: #161d14;
+  --lcd-ink-muted: rgba(22, 29, 20, 0.22);
+  --shift-gold: #e4b44c;
+  --alpha-pink: #e55368;
+  --base-cyan: #57b5d8;
+}
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 30% 20%, #1e2430 0%, #0f1218 70%, #090b0f 100%);
+  color: #e2e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: hidden;
+}
+
+/* Top App Bar */
+.app-topbar {
+  width: 100%;
+  max-width: 1180px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: rgba(15, 19, 28, 0.78);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-brand-badge {
+  background: linear-gradient(135deg, #e4b44c, #b8861b);
+  color: #111;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.08em;
+}
+
+.app-brand h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #f8fafc;
+}
+
+.app-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ctrl-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ctrl-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  padding: 5px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ctrl-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+
+.ctrl-btn.active {
+  background: rgba(228, 180, 76, 0.22);
+  border-color: #e4b44c;
+  color: #f6d17a;
+}
+
+/* Main Workspace Layout */
+.workspace-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 28px;
+  padding: 6px 20px 36px;
+  width: 100%;
+  max-width: 1220px;
+}
+
+/* transform: scale() sayfa düzenini büyütmediği için %135'te hesap makinesi yan paneli
+   örtüyor ve alt kısmı kesiliyordu. zoom ise yerleşimi de ölçekler. */
+.calc-stage {
+  display: flex;
+  justify-content: center;
+  zoom: var(--calc-scale);
+}
+
+/* ==========================================================================
+   CASIO fx-991EX PHYSICAL HARDWARE CHASSIS
+   ========================================================================== */
+.casio-chassis {
+  width: 386px;
+  border-radius: 26px 26px 38px 38px;
+  padding: 7px;
+  background: linear-gradient(145deg, #f3f4f6 0%, #d5d8de 45%, #b8bcc4 100%);
+  box-shadow:
+    0 30px 65px rgba(0, 0, 0, 0.78),
+    0 8px 20px rgba(0, 0, 0, 0.55),
+    inset 0 2px 3px rgba(255, 255, 255, 0.9),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.35);
+  position: relative;
+}
+
+.casio-inner-trim {
+  border-radius: 21px 21px 33px 33px;
+  padding: 3px;
+  background: linear-gradient(180deg, #4b5059 0%, #202329 50%, #14161a 100%);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Iconic ClassWiz Checkered Carbon-Fiber Faceplate */
+.casio-faceplate {
+  border-radius: 19px 19px 30px 30px;
+  padding: 16px 18px 22px;
+  background-color: #1f2228;
+  background-image:
+    linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.025) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.025) 75%),
+    radial-gradient(ellipse at top, #2c313b 0%, #191c22 70%, #14161b 100%);
+  background-size: 8px 8px, 8px 8px, 8px 8px, 8px 8px, 100% 100%;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0, 0 0;
+  box-shadow:
+    inset 0 2px 6px rgba(255, 255, 255, 0.08),
+    inset 0 -6px 14px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+/* Top Header: CASIO / CLASSWIZ / Solar Cell */
+.casio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  padding: 0 2px;
+}
+
+.casio-branding {
+  display: flex;
+  flex-direction: column;
+}
+
+.casio-logo {
+  font-family: "Arial Black", Impact, sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.09em;
+  color: #e8ecf2;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.casio-model {
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: 13px;
+  color: #d8dee8;
+  margin-top: 3px;
+  letter-spacing: 0.03em;
+}
+
+.casio-classwiz-tag {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: #d8b56c;
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+
+.solar-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.solar-panel {
+  width: 112px;
+  height: 28px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #2d1b18 0%, #3d241f 48%, #251512 100%);
+  border: 2px solid #121417;
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.85),
+    0 1px 1px rgba(255, 255, 255, 0.12);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  position: relative;
+}
+
+.solar-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(255,255,255,0.12) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.solar-cell {
+  border-right: 1px solid rgba(190, 145, 110, 0.35);
+}
+.solar-cell:last-child {
+  border-right: none;
+}
+
+.solar-caption {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #9ba3b0;
+  margin-top: 3px;
+}
+
+/* ==========================================================================
+   HIGH-RESOLUTION 192x63 DOT-MATRIX LCD DISPLAY
+   ========================================================================== */
+.lcd-bezel {
+  background: linear-gradient(180deg, #101216 0%, #1c2026 100%);
+  border-radius: 10px;
+  padding: 8px 10px 6px;
+  box-shadow:
+    inset 0 3px 7px rgba(0, 0, 0, 0.9),
+    0 1px 2px rgba(255, 255, 255, 0.08);
+  margin-bottom: 8px;
+  border: 1px solid #2d323c;
+}
+
+.lcd-screen {
+  width: 100%;
+  height: 126px;
+  background-color: var(--lcd-bg);
+  background-image:
+    linear-gradient(rgba(18, 25, 16, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 25, 16, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, #bcc9b4 0%, #cad5c2 18%, #c4d0bc 100%);
+  background-size: 2px 2px, 2px 2px, 100% 100%;
+  border-radius: 5px;
+  border: 2px solid #3c4339;
+  box-shadow:
+    inset 0 3px 6px rgba(0, 0, 0, 0.25),
+    inset 0 0 18px rgba(70, 85, 65, 0.18);
+  color: var(--lcd-ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4px 7px 5px;
+  position: relative;
+  overflow: hidden;
+  font-family: "Cambria Math", "STIX Two Math", "Courier New", monospace;
+}
+
+.lcd-screen.off-state {
+  background: #8a9484;
+}
+
+/* Top LCD Status Indicators */
+.lcd-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  border-bottom: 1px solid rgba(22, 29, 20, 0.15);
+  padding-bottom: 2px;
+  line-height: 1;
+  min-height: 14px;
+}
+
+.lcd-indicators-left,
+.lcd-indicators-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lcd-ind {
+  padding: 1px 2.5px;
+  border-radius: 2px;
+  color: var(--lcd-ink-muted);
+  transition: all 0.08s ease;
+}
+
+.lcd-ind.on {
+  color: var(--lcd-ink);
+}
+
+.lcd-ind.badge.on {
+  background: var(--lcd-ink);
+  color: var(--lcd-bg);
+}
+
+/* Gerçek LCD gibi yalnızca etkin göstergeler görünür. Hepsi birden gösterildiğinde sağdaki
+   FIX/SCI/√□/▲▼/☀ göstergeleri ekrandan taşıp kesiliyordu. D/R/G tıklanabilir oldukları için kalır. */
+.lcd-ind:not(.on):not(#ind-deg):not(#ind-rad):not(#ind-gra) {
+  display: none;
+}
+
+/* Main LCD Viewport */
+.lcd-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  padding-top: 2px;
+}
+
+/* Expression Area (Natural Textbook 2D Display) */
+.lcd-expr-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+  padding: 2px 2px;
+  white-space: nowrap;
+}
+.lcd-expr-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Result Area (Bottom right) */
+.lcd-result-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  min-height: 32px;
+  padding-top: 2px;
+}
+
+.lcd-mode-hint {
+  font-size: 10px;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  color: rgba(22, 29, 20, 0.72);
+}
+
+.lcd-result {
+  font-size: 21px;
+  font-weight: 700;
+  text-align: right;
+  margin-left: auto;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.lcd-result::-webkit-scrollbar {
+  display: none;
+}
+
+.lcd-result.lcd-result-small {
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+/* Değer giriş ekranı (CALC, SOLVE, hücreler, denklem katsayıları) */
+.lcd-prompt {
+  padding: 5px 4px 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+.lcd-prompt-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+.lcd-prompt-error {
+  background: var(--lcd-ink);
+  color: var(--lcd-bg);
+  padding: 0 4px;
+  border-radius: 2px;
+  font-size: 11px;
+}
+.lcd-prompt-input {
+  font-size: 17px;
+  min-height: 30px;
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  white-space: nowrap;
+  overflow: hidden;
+  border-bottom: 1.5px solid var(--lcd-ink);
+}
+
+/* Blinking Cursor */
+.lcd-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.15em;
+  background: var(--lcd-ink);
+  vertical-align: middle;
+  margin: 0 1px;
+  animation: cursorBlink 0.95s steps(1) infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* 2D Natural Textbook Math Elements inside LCD */
+.math-frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0 2px;
+  font-size: 0.84em;
+  line-height: 1.05;
+}
+.math-frac-num {
+  border-bottom: 1.5px solid var(--lcd-ink);
+  padding: 0 3px 1px;
+  min-width: 12px;
+  text-align: center;
+}
+.math-frac-den {
+  padding: 1px 3px 0;
+  min-width: 12px;
+  text-align: center;
+}
+.math-sqrt {
+  display: inline-flex;
+  align-items: stretch;
+  vertical-align: middle;
+}
+.math-sqrt-sym {
+  font-size: 1.15em;
+  line-height: 1;
+  padding-right: 1px;
+}
+.math-sqrt-body {
+  border-top: 1.5px solid var(--lcd-ink);
+  padding: 0 2px;
+}
+.math-sup {
+  font-size: 0.72em;
+  vertical-align: super;
+  line-height: 0;
+}
+.math-sub {
+  font-size: 0.72em;
+  vertical-align: sub;
+  line-height: 0;
+}
+.math-int-wrap,
+.math-sum-wrap {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+.math-int-sym {
+  font-size: 1.45em;
+  line-height: 0.9;
+}
+.math-limits {
+  display: inline-flex;
+  flex-direction: column;
+  font-size: 0.62em;
+  line-height: 1;
+  margin-right: 2px;
+}
+.math-box {
+  display: inline-block;
+  width: 9px;
+  height: 11px;
+  border: 1.3px solid var(--lcd-ink);
+  vertical-align: middle;
+  margin: 0 1px;
+}
+.math-box.filled {
+  background: var(--lcd-ink);
+}
+
+/* Icon MENU Grid inside LCD */
+.lcd-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+  flex: 1;
+  padding: 1px 0;
+}
+
+.lcd-menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  padding: 1px;
+  cursor: pointer;
+  position: relative;
+  font-family: Arial, sans-serif;
+  border: 1px solid transparent;
+}
+
+.lcd-menu-item.selected {
+  background: var(--lcd-ink);
+  color: var(--lcd-bg);
+}
+
+.lcd-menu-key {
+  position: absolute;
+  top: 1px;
+  left: 3px;
+  font-size: 8.5px;
+  font-weight: 800;
+}
+
+.lcd-menu-icon {
+  font-size: 12px;
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+.lcd-menu-footer {
+  background: var(--lcd-ink);
+  color: var(--lcd-bg);
+  font-family: Arial, sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 2px;
+}
+
+/* Text List Menu / Table / Matrix / Stat Editor inside LCD */
+.lcd-list-menu {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-family: "Courier New", monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.28;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.lcd-list-menu::-webkit-scrollbar {
+  display: none;
+}
+
+.lcd-list-row {
+  padding: 1px 4px;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+.lcd-list-row:hover,
+.lcd-list-row.selected {
+  background: var(--lcd-ink);
+  color: var(--lcd-bg);
+}
+
+/* Table / Matrix / Spreadsheet Grid inside LCD */
+.lcd-grid-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.lcd-grid-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lcd-grid-table th,
+.lcd-grid-table td {
+  border: 1px solid rgba(22, 29, 20, 0.35);
+  padding: 1px 3px;
+  text-align: right;
+  font-size: 10.5px;
+}
+
+.lcd-grid-table th {
+  background: rgba(22, 29, 20, 0.14);
+  text-align: center;
+}
+
+.lcd-grid-table td.active-cell {
+  background: var(--lcd-ink);
+  color: var(--lcd-bg);
+}
+
+.natural-vpam-badge {
+  text-align: center;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #aeb7c4;
+  margin-top: 5px;
+}
+
+/* ==========================================================================
+   CONTROL CLUSTER (SHIFT, ALPHA, D-PAD, MENU, ON + 4 FLANKING KEYS)
+   ========================================================================== */
+.top-control-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 36px 36px;
+  gap: 4px 6px;
+  align-items: end;
+  margin-bottom: 6px;
+}
+
+/*Circular Metallic Replay D-Pad spanning cols 3-4 and rows 1-2 */
+.dpad-wrapper {
+  grid-column: 3 / 5;
+  grid-row: 1 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dpad-circle {
+  width: 84px;
+  height: 72px;
+  border-radius: 42px / 36px;
+  background: radial-gradient(circle at 35% 30%, #dcdfe6 0%, #9ca3b0 55%, #656b77 100%);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.7),
+    inset 0 2px 3px rgba(255, 255, 255, 0.8),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.45);
+  position: relative;
+  border: 1.5px solid #2b2f38;
+}
+
+.dpad-btn {
+  position: absolute;
+  background: transparent;
+  border: none;
+  color: #23272f;
+  font-size: 10px;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: transform 0.06s ease, color 0.1s;
+}
+.dpad-btn:hover {
+  color: #000;
+}
+.dpad-btn:active {
+  transform: scale(0.9);
+}
+.dpad-up {
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 22px;
+}
+.dpad-down {
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 22px;
+}
+.dpad-left {
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 30px;
+}
+.dpad-right {
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 30px;
+}
+.dpad-center-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(40, 45, 55, 0.35);
+  background: radial-gradient(circle at 40% 35%, #c8cdd6, #8d94a2);
+  pointer-events: none;
+}
+
+/* Key Unit Container (Sub-labels above + physical button below) */
+.key-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.key-legends {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 1px;
+  min-height: 12px;
+  font-size: 8.5px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 2px;
+  white-space: nowrap;
+}
+
+.key-legends.single-center {
+  justify-content: center;
+}
+
+.leg-shift {
+  color: var(--shift-gold);
+}
+
+.leg-alpha {
+  color: var(--alpha-pink);
+}
+
+.leg-base {
+  color: var(--base-cyan);
+}
+
+.leg-white {
+  color: #cbd5e1;
+}
+
+/* Silver Oval Top Buttons (SHIFT, ALPHA, MENU, ON) */
+.btn-silver {
+  width: 100%;
+  height: 21px;
+  border-radius: 11px;
+  border: 1px solid #16181d;
+  background: linear-gradient(180deg, #d8dce3 0%, #9fa6b2 65%, #7d8490 100%);
+  color: #1b1e24;
+  font-size: 9.5px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.65),
+    inset 0 1px 1px rgba(255, 255, 255, 0.85);
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
+  padding: 0;
+}
+
+.btn-silver:active,
+.btn-silver.key-pressed {
+  transform: translateY(1.5px);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   SCIENTIFIC FUNCTION MATRIX (3 ROWS x 6 COLUMNS OF BLACK KEYS)
+   ========================================================================== */
+.sci-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px 6px;
+  margin-bottom: 10px;
+}
+
+.btn-sci {
+  width: 100%;
+  height: 23px;
+  border-radius: 5px 5px 7px 7px;
+  border: 1px solid #0e1014;
+  background: linear-gradient(180deg, #383d47 0%, #22262e 55%, #171a20 100%);
+  color: #f1f5f9;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  box-shadow:
+    0 2.5px 3px rgba(0, 0, 0, 0.72),
+    inset 0 1px 1px rgba(255, 255, 255, 0.22);
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
+}
+
+.btn-sci:hover {
+  background: linear-gradient(180deg, #434956 0%, #292e37 55%, #1d2027 100%);
+}
+
+.btn-sci:active,
+.btn-sci.key-pressed {
+  transform: translateY(1.5px);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   MAIN NUMBER & OPERATOR PAD (4 ROWS x 5 COLUMNS OF LARGE KEYS)
+   ========================================================================== */
+.numpad-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px 8px;
+}
+
+/* Crisp White Number & Operator Keys (Authentic ClassWiz White Keys) */
+.btn-num {
+  width: 100%;
+  height: 31px;
+  border-radius: 6px 6px 9px 9px;
+  border: 1px solid #161920;
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 65%, #d9dfe8 100%);
+  color: #14171f;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 3px 4px rgba(0, 0, 0, 0.65),
+    inset 0 1px 2px #ffffff,
+    inset 0 -2px 2px rgba(0, 0, 0, 0.15);
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
+}
+
+.btn-num:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #f5f7fa 70%, #e4e9f0 100%);
+}
+
+.btn-num:active,
+.btn-num.key-pressed {
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+}
+
+.btn-num.op-text {
+  font-size: 13px;
+}
+
+/* DEL and AC Metallic Blue/Slate Keys */
+.btn-accent {
+  width: 100%;
+  height: 31px;
+  border-radius: 6px 6px 9px 9px;
+  border: 1px solid #10141d;
+  background: linear-gradient(180deg, #4b749f 0%, #34567a 60%, #284360 100%);
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 3px 4px rgba(0, 0, 0, 0.7),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
+}
+
+.btn-accent:hover {
+  background: linear-gradient(180deg, #5683b0 0%, #3c628a 60%, #2e4d6e 100%);
+}
+
+.btn-accent:active,
+.btn-accent.key-pressed {
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   COMPANION SIDEBAR (HISTORY TAPE, VARIABLES, KEYBOARD SHORTCUTS)
+   ========================================================================== */
+.companion-sidebar {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.companion-sidebar.hidden {
+  display: none;
+}
+
+.side-card {
+  background: rgba(20, 25, 35, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.side-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.side-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.history-list {
+  max-height: 210px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.history-item:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+.history-expr {
+  font-size: 12px;
+  color: #94a3b8;
+  font-family: "Courier New", monospace;
+}
+.history-res {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f8fafc;
+  text-align: right;
+  font-family: "Courier New", monospace;
+}
+
+.vars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.var-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 11.5px;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Courier New", monospace;
+}
+.var-name {
+  color: #e55368;
+  font-weight: 700;
+}
+.var-val {
+  color: #e2e8f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shortcuts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+  font-size: 11.5px;
+  color: #cbd5e1;
+}
+.kbd-tag {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: monospace;
+  font-size: 11px;
+  color: #f8fafc;
+}
+
+/* QR Code Overlay Modal inside LCD */
+.lcd-qr-view {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 100%;
+  padding: 2px 4px;
+}
+.lcd-qr-canvas {
+  width: 78px;
+  height: 78px;
+  background: #fff;
+  padding: 3px;
+  border: 1px solid #000;
+  flex-shrink: 0;
+}
+
+@media (max-width: 840px) {
+  .workspace-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .companion-sidebar {
+    width: 386px;
+  }
+}

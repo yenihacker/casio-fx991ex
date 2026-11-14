@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CASIO fx-991EX ClassWiz — 1:1 Bilimsel Hesap Makinesi Simülatörü</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top Desktop Control Bar -->
+  <header class="app-topbar">
+    <div class="app-brand">
+      <span class="app-brand-badge">CLASSWIZ 1:1</span>
+      <h1>CASIO fx-991EX Tam Fonksiyonlu Masaüstü Simülatörü</h1>
+    </div>
+    <div class="app-controls">
+      <div class="ctrl-group">
+        <span>Açı:</span>
+        <button id="angle-btn-DEG" class="ctrl-btn active" style="padding:3px 8px;" onclick="setAngleUnit('DEG')" title="Derece (Degree)">DEG (D)</button>
+        <button id="angle-btn-RAD" class="ctrl-btn" style="padding:3px 8px;" onclick="setAngleUnit('RAD')" title="Radyan (Radian)">RAD (R)</button>
+        <button id="angle-btn-GRA" class="ctrl-btn" style="padding:3px 8px;" onclick="setAngleUnit('GRA')" title="Gradyan (Gradian)">GRA (G)</button>
+      </div>
+      <div class="ctrl-group">
+        <span>Boyut:</span>
+        <input id="zoom-slider" type="range" min="0.8" max="1.35" step="0.05" value="1.05"
+               oninput="document.documentElement.style.setProperty('--calc-scale', this.value); document.getElementById('zoom-label').textContent = Math.round(this.value*100)+'%';" />
+        <span id="zoom-label">105%</span>
+      </div>
+      <button id="btn-sound-toggle" class="ctrl-btn active"
+              onclick="calcState.soundEnabled = !calcState.soundEnabled; this.classList.toggle('active', calcState.soundEnabled); this.textContent = calcState.soundEnabled ? '🔊 Tuş Sesi: Açık' : '🔇 Tuş Sesi: Kapalı';">
+        🔊 Tuş Sesi: Açık
+      </button>
+      <button id="btn-panel-toggle" class="ctrl-btn active"
+              onclick="const sb = document.getElementById('companion-sidebar'); sb.classList.toggle('hidden'); this.classList.toggle('active', !sb.classList.contains('hidden'));">
+        📋 Yan Panel (Geçmiş &amp; Hafıza)
+      </button>
+    </div>
+  </header>
+
+  <main class="workspace-container">
+    <!-- ====================================================================
+         1:1 PHYSICAL CASIO fx-991EX CLASSWIZ HARDWARE UNIT
+         ==================================================================== -->
+    <div class="calc-stage">
+      <div class="casio-chassis">
+        <div class="casio-inner-trim">
+          <div class="casio-faceplate">
+
+            <!-- Top Header: Branding & Solar Panel -->
+            <div class="casio-header">
+              <div class="casio-branding">
+                <div class="casio-logo">CASIO</div>
+                <div class="casio-model">fx-991EX</div>
+                <div class="casio-classwiz-tag">CLASSWIZ</div>
+              </div>
+              <div class="solar-block">
+                <div class="solar-panel">
+                  <div class="solar-cell"></div>
+                  <div class="solar-cell"></div>
+                  <div class="solar-cell"></div>
+                  <div class="solar-cell"></div>
+                </div>
+                <div class="solar-caption">TWO WAY POWER</div>
+              </div>
+            </div>
+
+            <!-- High-Resolution 192x63 Dot-Matrix LCD Bezel & Screen -->
+            <div class="lcd-bezel">
+              <div id="lcd-screen" class="lcd-screen">
+                <!-- Status Bar Indicators -->
+                <div class="lcd-statusbar">
+                  <div class="lcd-indicators-left">
+                    <span id="ind-shift" class="lcd-ind badge">S</span>
+                    <span id="ind-alpha" class="lcd-ind badge">A</span>
+                    <span id="ind-m" class="lcd-ind">M</span>
+                    <span id="ind-sto" class="lcd-ind">STO</span>
+                    <span id="ind-rcl" class="lcd-ind">RCL</span>
+                    <span id="ind-stat" class="lcd-ind">STAT</span>
+                    <span id="ind-cmplx" class="lcd-ind">CMPLX</span>
+                    <span id="ind-mat" class="lcd-ind">MAT</span>
+                    <span id="ind-vct" class="lcd-ind">VCT</span>
+                  </div>
+                  <div class="lcd-indicators-right">
+                    <span id="ind-deg" class="lcd-ind badge on" style="cursor:pointer;" onclick="setAngleUnit('DEG')" title="Derece (Degree) moduna geç">D</span>
+                    <span id="ind-rad" class="lcd-ind badge" style="cursor:pointer;" onclick="setAngleUnit('RAD')" title="Radyan (Radian) moduna geç">R</span>
+                    <span id="ind-gra" class="lcd-ind badge" style="cursor:pointer;" onclick="setAngleUnit('GRA')" title="Gradyan (Gradian) moduna geç">G</span>
+                    <span id="ind-fix" class="lcd-ind">FIX</span>
+                    <span id="ind-sci" class="lcd-ind">SCI</span>
+                    <span id="ind-math" class="lcd-ind on">√□</span>
+                    <span id="ind-hist" class="lcd-ind">▲▼</span>
+                    <span id="ind-solar" class="lcd-ind on">☀</span>
+                  </div>
+                </div>
+
+                <!-- Dynamic LCD Viewport (Natural Textbook 2D / Menu / Matrix / Table) -->
+                <div id="lcd-body" class="lcd-body"></div>
+              </div>
+              <div class="natural-vpam-badge">NATURAL-V.P.A.M.</div>
+            </div>
+
+            <!-- ==============================================================
+                 TOP CONTROL BLOCK (SHIFT, ALPHA, D-PAD, MENU, ON + 4 KEYS)
+                 ============================================================== -->
+            <div class="top-control-grid">
+              <!-- Row 1, Col 1: SHIFT -->
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">SHIFT</span></div>
+                <button class="btn-silver" data-key="SHIFT" title="SHIFT (Kısayol: S)"></button>
+              </div>
+
+              <!-- Row 1, Col 2: ALPHA -->
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-alpha">ALPHA</span></div>
+                <button class="btn-silver" data-key="ALPHA" title="ALPHA (Kısayol: A)"></button>
+              </div>
+
+              <!-- Col 3-4, Row 1-2: Circular Metallic Replay D-Pad -->
+              <div class="dpad-wrapper">
+                <div class="dpad-circle">
+                  <button class="dpad-btn dpad-up" data-key="UP" title="Yukarı (▲)">▲</button>
+                  <button class="dpad-btn dpad-down" data-key="DOWN" title="Aşağı (▼)">▼</button>
+                  <button class="dpad-btn dpad-left" data-key="LEFT" title="Sol (◀)">◀</button>
+                  <button class="dpad-btn dpad-right" data-key="RIGHT" title="Sağ (▶)">▶</button>
+                  <div class="dpad-center-ring"></div>
+                </div>
+              </div>
+
+              <!-- Row 1, Col 5: MENU / SET UP -->
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-white">MENU</span>
+                  <span class="leg-shift">SET UP</span>
+                </div>
+                <button class="btn-silver" data-key="MENU" title="MENU / SET UP (Kısayol: M)"></button>
+              </div>
+
+              <!-- Row 1, Col 6: ON -->
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-white">ON</span></div>
+                <button class="btn-silver" data-key="ON" title="ON (Aç / Sıfırla)"></button>
+              </div>
+
+              <!-- Row 2, Col 1: OPTN / QR -->
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">QR</span></div>
+                <button class="btn-sci" data-key="OPTN" title="OPTN / QR">OPTN</button>
+              </div>
+
+              <!-- Row 2, Col 2: CALC / SOLVE / = -->
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">SOLVE</span>
+                  <span class="leg-alpha">=</span>
+                </div>
+                <button class="btn-sci" data-key="CALC" title="CALC / SOLVE">CALC</button>
+              </div>
+
+              <!-- Row 2, Col 5: ∫dx / d/dx / : -->
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">d/dx</span>
+                  <span class="leg-alpha">:</span>
+                </div>
+                <button class="btn-sci" data-key="INTEG" title="Belirli İntegral / Türev">∫<span style="font-size:9px;">□</span></button>
+              </div>
+
+              <!-- Row 2, Col 6: Dedicated Variable x / ∑ -->
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">∑</span>
+                  <span class="leg-alpha"></span>
+                </div>
+                <button class="btn-sci" data-key="X_VAR" title="Değişken x / Toplam Sembolü ∑" style="font-style:italic;font-family:Georgia,serif;font-size:13px;">x</button>
+              </div>
+            </div>
+
+            <!-- ==============================================================
+                 SCIENTIFIC FUNCTION MATRIX (3 ROWS x 6 COLUMNS)
+                 ============================================================== -->
+            <div class="sci-grid">
+              <!-- Sci Row 1 (6 keys) -->
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">□ □/□</span></div>
+                <button class="btn-sci" data-key="FRAC" title="Kesir / Tam Sayılı Kesir">■/□</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">³√□</span></div>
+                <button class="btn-sci" data-key="SQRT" title="Karekök / Küpkök">√□</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">x³</span>
+                  <span class="leg-base">DEC</span>
+                </div>
+                <button class="btn-sci" data-key="SQ" title="Kare / Küp / DEC">x²</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">ⁿ√□</span>
+                  <span class="leg-base">HEX</span>
+                </div>
+                <button class="btn-sci" data-key="POW" title="Üs / n. Dereceden Kök / HEX">x<sup>□</sup></button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">10<sup>□</sup></span>
+                  <span class="leg-base">BIN</span>
+                </div>
+                <button class="btn-sci" data-key="LOG" title="Logaritma log_a(b) / 10^x / BIN">log<sub>□</sub>■</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">e<sup>□</sup></span>
+                  <span class="leg-base">OCT</span>
+                </div>
+                <button class="btn-sci" data-key="LN" title="Doğal Logaritma ln / e^x / OCT">ln</button>
+              </div>
+
+              <!-- Sci Row 2 (6 keys) -->
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">∠</span>
+                  <span class="leg-alpha">A</span>
+                </div>
+                <button class="btn-sci" data-key="NEG" title="Negatif İşareti / Açı ∠ / Değişken A">(−)</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">FACT</span>
+                  <span class="leg-alpha">B</span>
+                </div>
+                <button class="btn-sci" data-key="DMS" title="Derece-Dakika-Saniye / Asal Çarpanlar (FACT) / B">° ′ ″</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">x!</span>
+                  <span class="leg-alpha">C</span>
+                </div>
+                <button class="btn-sci" data-key="INV" title="Çarpma işlemine göre tersi x⁻¹ / Faktöriyel x! / C">x⁻¹</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">sin⁻¹</span>
+                  <span class="leg-alpha">D</span>
+                </div>
+                <button class="btn-sci" data-key="SIN" title="sin / arcsin / D">sin</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">cos⁻¹</span>
+                  <span class="leg-alpha">E</span>
+                </div>
+                <button class="btn-sci" data-key="COS" title="cos / arccos / E">cos</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">tan⁻¹</span>
+                  <span class="leg-alpha">F</span>
+                </div>
+                <button class="btn-sci" data-key="TAN" title="tan / arctan / F">tan</button>
+              </div>
+
+              <!-- Sci Row 3 (6 keys) -->
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">RCL</span></div>
+                <button class="btn-sci" data-key="STO" title="Değişkene Kaydet (STO) / Geri Çağır (RCL)">STO</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">←</span>
+                  <span class="leg-alpha">i</span>
+                </div>
+                <button class="btn-sci" data-key="ENG" title="Mühendislik Gösterimi (ENG) / Sanal Birim i">ENG</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">%</span></div>
+                <button class="btn-sci" data-key="LPAREN" title="Sol Parantez / Yüzde %">(</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">,</span>
+                  <span class="leg-alpha">x</span>
+                </div>
+                <button class="btn-sci" data-key="RPAREN" title="Sağ Parantez / Virgül , / Değişken x">)</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">a b/c⇔d/c</span>
+                  <span class="leg-alpha">y</span>
+                </div>
+                <button class="btn-sci" data-key="SD" title="Kesir ⇔ Ondalık Dönüşümü (S⇔D) / y">S⇔D</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">M−</span>
+                  <span class="leg-alpha">M</span>
+                </div>
+                <button class="btn-sci" data-key="MPLUS" title="Hafızaya Ekle (M+) / Çıkar (M-)">M+</button>
+              </div>
+            </div>
+
+            <!-- ==============================================================
+                 MAIN NUMBER & OPERATOR PAD (4 ROWS x 5 COLUMNS)
+                 ============================================================== -->
+            <div class="numpad-grid">
+              <!-- Numpad Row 1: 7, 8, 9, DEL, AC -->
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">CONST</span></div>
+                <button class="btn-num" data-key="NUM7">7</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">CONV</span></div>
+                <button class="btn-num" data-key="NUM8">8</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">RESET</span></div>
+                <button class="btn-num" data-key="NUM9">9</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">INS</span>
+                  <span class="leg-alpha">UNDO</span>
+                </div>
+                <button class="btn-accent" data-key="DEL">DEL</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">OFF</span></div>
+                <button class="btn-accent" data-key="AC">AC</button>
+              </div>
+
+              <!-- Numpad Row 2: 4, 5, 6, ×, ÷ -->
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">[MAT/VCT]</span></div>
+                <button class="btn-num" data-key="NUM4">4</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends"></div>
+                <button class="btn-num" data-key="NUM5">5</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends"></div>
+                <button class="btn-num" data-key="NUM6">6</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">nPr</span>
+                  <span class="leg-alpha">GCD</span>
+                </div>
+                <button class="btn-num" data-key="MUL">×</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">nCr</span>
+                  <span class="leg-alpha">LCM</span>
+                </div>
+                <button class="btn-num" data-key="DIV">÷</button>
+              </div>
+
+              <!-- Numpad Row 3: 1, 2, 3, +, − -->
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">[STAT]</span></div>
+                <button class="btn-num" data-key="NUM1">1</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">[CMPLX]</span></div>
+                <button class="btn-num" data-key="NUM2">2</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">[BASE]</span></div>
+                <button class="btn-num" data-key="NUM3">3</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">Pol</span></div>
+                <button class="btn-num" data-key="PLUS">+</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">Rec</span></div>
+                <button class="btn-num" data-key="MINUS">−</button>
+              </div>
+
+              <!-- Numpad Row 4: 0, ., ×10ˣ, Ans, = -->
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">Rnd</span></div>
+                <button class="btn-num" data-key="NUM0">0</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">Ran#</span>
+                  <span class="leg-alpha">RanInt</span>
+                </div>
+                <button class="btn-num" data-key="DOT">.</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">π</span>
+                  <span class="leg-alpha">e</span>
+                </div>
+                <button class="btn-num op-text" data-key="EXP10">×10<sup>x</sup></button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends">
+                  <span class="leg-shift">DRG▸</span>
+                  <span class="leg-alpha">PreAns</span>
+                </div>
+                <button class="btn-num op-text" data-key="ANS">Ans</button>
+              </div>
+
+              <div class="key-cell">
+                <div class="key-legends single-center"><span class="leg-shift">≈</span></div>
+                <button class="btn-num" data-key="EQUALS">=</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         COMPANION DESKTOP SIDEBAR (HISTORY TAPE, MEMORY VARS & GUIDE)
+         ==================================================================== -->
+    <aside id="companion-sidebar" class="companion-sidebar">
+      <!-- Calculation History Tape -->
+      <div class="side-card">
+        <div class="side-card-header">
+          <h2 class="side-card-title">📜 İşlem Geçmişi (Tıkla &amp; Yükle)</h2>
+          <button class="ctrl-btn" style="padding:2px 8px;font-size:11px;"
+                  onclick="calcState.history=[]; updateCompanionSidebar(); renderLCD();">
+            Temizle
+          </button>
+        </div>
+        <div id="history-list" class="history-list"></div>
+      </div>
+
+      <!-- Variable Memory Inspector -->
+      <div class="side-card">
+        <div class="side-card-header">
+          <h2 class="side-card-title">💾 Değişken Hafızası (STO / RCL)</h2>
+        </div>
+        <div id="vars-grid" class="vars-grid"></div>
+      </div>
+
+      <!-- Quick Features & Keyboard Guide -->
+      <div class="side-card">
+        <div class="side-card-header">
+          <h2 class="side-card-title">⌨️ Klavye Kısayolları &amp; Öne Çıkanlar</h2>
+        </div>
+        <div class="shortcuts-grid">
+          <div><span class="kbd-tag">Enter</span> Hesapla (<code>=</code>)</div>
+          <div><span class="kbd-tag">Esc</span> Temizle (<code>AC</code>)</div>
+          <div><span class="kbd-tag">Backspace</span> Sil (<code>DEL</code>)</div>
+          <div><span class="kbd-tag">Tab</span> Kesir⇔Ondalık (<code>S⇔D</code>)</div>
+          <div><span class="kbd-tag">S</span> / <span class="kbd-tag">A</span> SHIFT / ALPHA</div>
+          <div><span class="kbd-tag">M</span> / <span class="kbd-tag">O</span> MENU / OPTN</div>
+          <div><span class="kbd-tag">X</span> Değişken <i>x</i></div>
+          <div><span class="kbd-tag">▲▼◀▶</span> İmleç / Menü</div>
+        </div>
+        <div style="margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.08);font-size:11.5px;color:#94a3b8;line-height:1.45;">
+          <b>Aktif ClassWiz Özellikleri:</b> 12 Uyg. Modu (<code>MENU</code>), Doğal 2B Kesir/Kök/İntegral/Türev/Toplam, <code>SOLVE</code> (SHIFT+CALC), Asal Çarpan <code>FACT</code> (SHIFT+°′″), 40 Sabit (SHIFT+7), 40 Birim Dönüşümü (SHIFT+8), QR Kod (SHIFT+OPTN).
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="engine.js"></script>
+  <script src="ui.js"></script>
+  <script>
+    document.documentElement.style.setProperty('--calc-scale', '1.05');
+  </script>
+</body>
+</html>
